@@ -1,0 +1,12 @@
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\JupiterEntity.dll.config
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\JupiterEntity.dll
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\JupiterEntity.pdb
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\EntityFramework.dll
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\EntityFramework.xml
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\obj\Debug\JupiterEntity.csprojAssemblyReference.cache
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\obj\Debug\JupiterEntity.csproj.CoreCompileInputs.cache
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\obj\Debug\JupiterEntity.csproj.CopyComplete
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\obj\Debug\JupiterEntity.dll
+C:\Users\edwin\source\repos\Jupiter\JupiterEntity\obj\Debug\JupiterEntity.pdb

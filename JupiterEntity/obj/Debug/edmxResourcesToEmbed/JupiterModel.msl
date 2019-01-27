@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JupiterModelStoreContainer" CdmEntityContainer="JupiterEntities">
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="JupiterModel.Cart">
+        <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+          <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
+          <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
+          <ScalarProperty Name="IsActivate" ColumnName="IsActivate" />
+          <ScalarProperty Name="PlannedTime" ColumnName="PlannedTime" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartProds">
+      <EntityTypeMapping TypeName="JupiterModel.CartProd">
+        <MappingFragment StoreEntitySet="CartProd">
+          <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+          <ScalarProperty Name="CartId" ColumnName="CartId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="JupiterModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventTypes">
+      <EntityTypeMapping TypeName="JupiterModel.EventType">
+        <MappingFragment StoreEntitySet="EventType">
+          <ScalarProperty Name="EventName" ColumnName="EventName" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="JupiterModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
+          <ScalarProperty Name="IsActivate" ColumnName="IsActivate" />
+          <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="SpcOrDisct" ColumnName="SpcOrDisct" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="AvailableStock" ColumnName="AvailableStock" />
+          <ScalarProperty Name="TotalStock" ColumnName="TotalStock" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CategroyId" ColumnName="CategroyId" />
+          <ScalarProperty Name="ProdTypeId" ColumnName="ProdTypeId" />
+          <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductCategories">
+      <EntityTypeMapping TypeName="JupiterModel.ProductCategory">
+        <MappingFragment StoreEntitySet="ProductCategory">
+          <ScalarProperty Name="CategroyName" ColumnName="CategroyName" />
+          <ScalarProperty Name="CategroyId" ColumnName="CategroyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductMedias">
+      <EntityTypeMapping TypeName="JupiterModel.ProductMedia">
+        <MappingFragment StoreEntitySet="ProductMedia">
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTypes">
+      <EntityTypeMapping TypeName="JupiterModel.ProductType">
+        <MappingFragment StoreEntitySet="ProductType">
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="ProdTypeId" ColumnName="ProdTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="JupiterModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="EventtypeId" ColumnName="EventtypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ProdjectId" ColumnName="ProdjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectMedias">
+      <EntityTypeMapping TypeName="JupiterModel.ProjectMedia">
+        <MappingFragment StoreEntitySet="ProjectMedia">
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Testimonials">
+      <EntityTypeMapping TypeName="JupiterModel.Testimonial">
+        <MappingFragment StoreEntitySet="Testimonial">
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="EventtypeId" ColumnName="EventtypeId" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="TestimonialId" ColumnName="TestimonialId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
