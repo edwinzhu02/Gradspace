@@ -1,9 +1,12 @@
 ﻿using Jupiter.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 
@@ -13,8 +16,8 @@ namespace Jupiter.Controllers
     {
         private bool CanAccess(string currentControllerName, string currentActionName)
         {
-           bool canAccess = true;
-           return canAccess;
+            bool canAccess = true;
+            return canAccess;
         }
         protected void SetSession()
         {
@@ -59,6 +62,7 @@ namespace Jupiter.Controllers
             }
             return errorMessages.ToArray();
         }
+
 
     }
 }

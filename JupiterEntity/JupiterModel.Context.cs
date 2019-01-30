@@ -19,7 +19,6 @@ namespace JupiterEntity
             : base("name=JupiterEntities")
         {
         }
-    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

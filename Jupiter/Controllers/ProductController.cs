@@ -8,6 +8,10 @@ using System.Web.Http.Cors;
 using JupiterEntity;
 using Jupiter.Models;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Web;
+using Jupiter.Common;
 
 namespace Jupiter.Controllers
 {
@@ -15,6 +19,14 @@ namespace Jupiter.Controllers
     
     public class ProductController : BaseController
     {
+        [Route("api/productbytype/{type:int}")]
+        [HttpGet]
+        public IHttpActionResult GetByType(int type)
+        {
+            var result = new Result<List<ProductModel>>();
+            return Json(result);
+        }
+        [Route("api/product")]
         public IHttpActionResult Get() {
             var result = new Result<List<ProductModel>>();
             using (var db = new JupiterEntities()) {
@@ -38,6 +50,17 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
          }
+        //[Route("api/product/{id:int}/{id2:int}/{id3}")]--//api/product/1/2/"2018-03-14"
+        //public IHttpActionResult Get(int id, int id2, string id3)
+        //[Route("api/Task")]   ---api/Task?id=1&id2=2&id3="2018-03-14"
+        [Route("api/product")]
+        //api/product?queryType=1&type=1"
+        public IHttpActionResult Get(int queryType,int type)
+        {
+            var result = new Result<ProductModel>();
+            return Json(result);
+        }
+        [Route("api/product")]
         // GET: api/Product/5
         public IHttpActionResult Get(int id)
         {
@@ -157,6 +180,35 @@ namespace Jupiter.Controllers
             }
             return Json(result);
         }
+        [Route("api/productImg")]
+        public async Task<HttpResponseMessage> SaveImg()
+        {
+            // Check if the request contains multipart/form-data.
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
 
+            string root = HttpContext.Current.Server.MapPath("~/Resources");
+            var provider = new FormDataStreamer(root);
+
+            try
+            {
+                // Read the form data.
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                // This illustrates how to get the file names.
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    Trace.WriteLine(file.Headers.ContentDisposition.FileName);
+                    Trace.WriteLine("Server file path: " + file.LocalFileName);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
     }
 }
