@@ -14,6 +14,8 @@ namespace Jupiter.Controllers
 {
     public abstract class BaseController : ApiController
     {
+        //protected BundleConfig config;
+
         private bool CanAccess(string currentControllerName, string currentActionName)
         {
             bool canAccess = true;

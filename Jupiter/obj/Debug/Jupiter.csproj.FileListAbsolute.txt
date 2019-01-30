@@ -42,3 +42,8 @@ C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\System.Web.Http.Cors.dll
 C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\JupiterEntity.pdb
 C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\JupiterEntity.dll.config
 C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\System.Web.Http.Cors.xml
+C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\AutoMapper.dll
+C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\System.ValueTuple.dll
+C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\AutoMapper.pdb
+C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\AutoMapper.xml
+C:\Users\edwin\source\repos\Jupiter\Jupiter\bin\System.ValueTuple.xml

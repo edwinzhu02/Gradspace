@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Web;
 using Jupiter.Common;
+using AutoMapper;
 
 namespace Jupiter.Controllers
 {
@@ -29,24 +30,16 @@ namespace Jupiter.Controllers
         [Route("api/product")]
         public IHttpActionResult Get() {
             var result = new Result<List<ProductModel>>();
+
             using (var db = new JupiterEntities()) {
-                var prod = db.Products.Select(x =>
-                new ProductModel { ProdId = x.ProdId,
-                    ProdTypeId = x.ProdTypeId,
-                    CategroyId = x.CategroyId,
-                    Title = x.Title,
-                    SubTitle = x.SubTitle,
-                    Description = x.Description,
-                    TotalStock = x.TotalStock,
-                    AvailableStock = x.AvailableStock,
-                    Price = x.Price,
-                    SpcOrDisct = x.SpcOrDisct,
-                    Discount = x.Discount,
-                    ProdTypeName = x.ProductType.TypeName,
-                    CategroyName = x.ProductCategory.CategroyName,
-                    ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
-                }).ToList();
-                result.Data = prod;
+                List<Product> originalProd = db.Products.Select(x => x).ToList();
+                MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductModel>());
+                IMapper mapper = config.CreateMapper();
+                List<ProductModel> prodModelList = new List<ProductModel>();
+                prodModelList = mapper.Map<List<ProductModel>>(originalProd);
+                //List<ProductModel> pdmList = prodFrom.Select(Mapper.Map<Product, ProductModel>).ToList();
+
+                result.Data = prodModelList;
                 return Json(result);
             }
          }
@@ -68,26 +61,10 @@ namespace Jupiter.Controllers
 
             using (var db = new JupiterEntities())
             {
-                var prod = db.Products.Where(p=>p.ProdId==id).Select(x =>
-                new ProductModel
-                {
-                    ProdId = x.ProdId,
-                    ProdTypeId = x.ProdTypeId,
-                    CategroyId = x.CategroyId,
-                    Title = x.Title,
-                    SubTitle = x.SubTitle,
-                    Description = x.Description,
-                    TotalStock = x.TotalStock,
-                    AvailableStock = x.AvailableStock,
-                    Price = x.Price,
-                    SpcOrDisct = x.SpcOrDisct,
-                    Discount = x.Discount,
-                    ProdTypeName = x.ProductType.TypeName,
-                    CategroyName = x.ProductCategory.CategroyName,
-                    ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
-            }).FirstOrDefault();
-                result.Data = prod;
-                if (prod != null) {
+                var originalProd = db.Products.Where(p => p.ProdId == id).Select(x => x).FirstOrDefault();
+                ProductModel prodModel = AutoMapperCfg.mapper.Map<ProductModel>(originalProd);
+                result.Data = prodModel;
+                if (originalProd != null) {
                     result.IsFound = false;
                 }
                 return Json(result);
