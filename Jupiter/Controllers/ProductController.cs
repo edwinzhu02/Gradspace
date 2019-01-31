@@ -157,7 +157,9 @@ namespace Jupiter.Controllers
             }
             return Json(result);
         }
+//test upload file
         [Route("api/productImg")]
+       
         public async Task<HttpResponseMessage> SaveImg()
         {
             // Check if the request contains multipart/form-data.
