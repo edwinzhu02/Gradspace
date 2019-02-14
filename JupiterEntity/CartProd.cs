@@ -20,6 +20,7 @@ namespace JupiterEntity
         public Nullable<decimal> Price { get; set; }
         public string Title { get; set; }
         public string SubTitle { get; set; }
+        public Nullable<int> Quantity { get; set; }
     
         public virtual Cart Cart { get; set; }
         public virtual Product Product { get; set; }

@@ -21,7 +21,7 @@ namespace Jupiter.Controllers
             return "value";
         }
 
-        // POST api/values/  parameter/"123"
+        // POST api/values
         public void Post([FromBody]string value)
         {
         }

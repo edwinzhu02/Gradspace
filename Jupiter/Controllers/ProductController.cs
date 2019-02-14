@@ -8,10 +8,6 @@ using System.Web.Http.Cors;
 using JupiterEntity;
 using Jupiter.Models;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Web;
-using Jupiter.Common;
 using AutoMapper;
 
 namespace Jupiter.Controllers
@@ -20,65 +16,105 @@ namespace Jupiter.Controllers
     
     public class ProductController : BaseController
     {
+        public IHttpActionResult Get() {
+            var result = new Result<List<ProductModel>>();
+            using (var db = new jupiterEntities())
+            {
+                var prod = db.Products.Select(x =>
+                new ProductModel
+                {
+                    ProdId = x.ProdId,
+                    ProdTypeId = x.ProdTypeId,
+                    CategroyId = x.CategroyId,
+                    Title = x.Title,
+                    SubTitle = x.SubTitle,
+                    Description = x.Description,
+                    TotalStock = x.TotalStock,
+                    AvailableStock = x.AvailableStock,
+                    Price = x.Price,
+                    SpcOrDisct = x.SpcOrDisct,
+                    Discount = x.Discount,
+                    ProdTypeName = x.ProductType.TypeName,
+                    CategroyName = x.ProductCategory.CategroyName,
+                }).ToList();
+                result.Data = prod;
+                return Json(result);
+            }
+
+        }
+        // sort products by type
         [Route("api/productbytype/{type:int}")]
         [HttpGet]
         public IHttpActionResult GetByType(int type)
         {
             var result = new Result<List<ProductModel>>();
-            return Json(result);
-        }
-        [Route("api/product")]
-        public IHttpActionResult Get() {
-            var result = new Result<List<ProductModel>>();
-
-            using (var db = new JupiterEntities()) {
-                List<Product> originalProd = db.Products.Select(x => x).ToList();
-                MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductModel>());
-                IMapper mapper = config.CreateMapper();
-                List<ProductModel> prodModelList = new List<ProductModel>();
-                prodModelList = mapper.Map<List<ProductModel>>(originalProd);
-                //List<ProductModel> pdmList = prodFrom.Select(Mapper.Map<Product, ProductModel>).ToList();
-
-                result.Data = prodModelList;
+            using (var db = new jupiterEntities())
+            {
+                var prod = db.Products.Where(x=>x.ProdTypeId == type).Select(x =>
+                new ProductModel
+                {
+                    ProdId = x.ProdId,
+                    ProdTypeId = x.ProdTypeId,
+                    CategroyId = x.CategroyId,
+                    Title = x.Title,
+                    SubTitle = x.SubTitle,
+                    Description = x.Description,
+                    TotalStock = x.TotalStock,
+                    AvailableStock = x.AvailableStock,
+                    Price = x.Price,
+                    SpcOrDisct = x.SpcOrDisct,
+                    Discount = x.Discount,
+                    ProdTypeName = x.ProductType.TypeName,
+                    CategroyName = x.ProductCategory.CategroyName,
+                    ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
+                }).ToList();
+                result.Data = prod;
                 return Json(result);
             }
-         }
-        //[Route("api/product/{id:int}/{id2:int}/{id3}")]--//api/product/1/2/"2018-03-14"
-        //public IHttpActionResult Get(int id, int id2, string id3)
-        //[Route("api/Task")]   ---api/Task?id=1&id2=2&id3="2018-03-14"
-        [Route("api/product")]
-        //api/product?queryType=1&type=1"
-        public IHttpActionResult Get(int queryType,int type)
-        {
-            var result = new Result<ProductModel>();
-            return Json(result);
         }
-        [Route("api/product")]
         // GET: api/Product/5
         public IHttpActionResult Get(int id)
         {
             var result = new Result<ProductModel>();
 
-            using (var db = new JupiterEntities())
+            using (var db = new jupiterEntities())
             {
-                var originalProd = db.Products.Where(p => p.ProdId == id).Select(x => x).FirstOrDefault();
-                ProductModel prodModel = AutoMapperCfg.mapper.Map<ProductModel>(originalProd);
-                result.Data = prodModel;
-                if (originalProd != null) {
+                var prod = db.Products.Where(p => p.ProdId == id).Select(x =>
+                    new ProductModel
+                    {
+                        ProdId = x.ProdId,
+                        ProdTypeId = x.ProdTypeId,
+                        CategroyId = x.CategroyId,
+                        Title = x.Title,
+                        SubTitle = x.SubTitle,
+                        Description = x.Description,
+                        TotalStock = x.TotalStock,
+                        AvailableStock = x.AvailableStock,
+                        Price = x.Price,
+                        SpcOrDisct = x.SpcOrDisct,
+                        Discount = x.Discount,
+                        ProdTypeName = x.ProductType.TypeName,
+                        CategroyName = x.ProductCategory.CategroyName,
+                        ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
+                    }).FirstOrDefault();
+                result.Data = prod;
+                if (prod != null)
+                {
                     result.IsFound = false;
                 }
                 return Json(result);
             }
         }
         // POST: api/Product
+        //add
 
         public IHttpActionResult Post([FromBody]ProductModel productModel)
         {
-            var result = new Result<string>();
+            var result = new Result<string>();  
             result = base.CheckStateModel(ModelState);
             if (result.IsSuccess == false) return Json(result);
 
-            using (var db = new JupiterEntities())
+            using (var db = new jupiterEntities())
             {
                 Product newProd = new Product
                 {
@@ -119,13 +155,14 @@ namespace Jupiter.Controllers
             }
         }
         // PUT: api/Product/5
+        //update
         public IHttpActionResult Put(int id, [FromBody]ProductModel productModel)
         {
             var result = new Result<string>();
             result = base.CheckStateModel(ModelState);
             if (result.IsSuccess == false) return Json(result);
 
-            using (var db = new JupiterEntities())
+            using (var db = new jupiterEntities())
             {
                 Product updateProd = db.Products.Where(x => x.ProdId == id).
                     Select(x =>x).FirstOrDefault();
@@ -157,37 +194,6 @@ namespace Jupiter.Controllers
             }
             return Json(result);
         }
-//test upload file
-        [Route("api/productImg")]
-       
-        public async Task<HttpResponseMessage> SaveImg()
-        {
-            // Check if the request contains multipart/form-data.
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
 
-            string root = HttpContext.Current.Server.MapPath("~/Resources");
-            var provider = new FormDataStreamer(root);
-
-            try
-            {
-                // Read the form data.
-                await Request.Content.ReadAsMultipartAsync(provider);
-
-                // This illustrates how to get the file names.
-                foreach (MultipartFileData file in provider.FileData)
-                {
-                    Trace.WriteLine(file.Headers.ContentDisposition.FileName);
-                    Trace.WriteLine("Server file path: " + file.LocalFileName);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            catch (System.Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-            }
-        }
     }
 }
