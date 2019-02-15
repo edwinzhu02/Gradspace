@@ -16,21 +16,29 @@ namespace Jupiter.Controllers
             var result = new Result<List<CartModel>>();
             using (var db = new jupiterEntities())
             {
-                var carts = db.Carts.Select(x =>
-                new CartModel
-                {
-                    CartID = x.CartID,
-                    Price = x.Price,
-                    Location = x.Location,
-                    PlannedTime = x.PlannedTime,
-                    IsActivate = x.IsActivate,
-                    CreateOn = x.CreateOn,
-                    UpdateOn = x.UpdateOn,
-                    ContactId = x.ContactId
-                }).ToList();
-                result.Data = carts;
+                //var carts = db.Carts.Select(x =>
+                //new CartModel
+                //{
+                //    CartId = x.CartID,
+                //    Price = x.Price,
+                //    Location = x.Location,
+                //    PlannedTime = x.PlannedTime,
+                //    IsActivate = x.IsActivate,
+                //    CreateOn = x.CreateOn,
+                //    UpdateOn = x.UpdateOn,
+                //    ContactId = x.ContactId
+                //}).ToList();
+                //result.Data = carts;
+                //return Json(result);
+                List<Cart> carts = db.Carts.ToList();
+                List<CartModel> cartModels = new List<CartModel>();
+
+                AutoMapper.Mapper.Map(carts, cartModels);
+
+                result.Data = cartModels;
                 return Json(result);
             }
+
         }
 
         // GET api/values/5
@@ -42,7 +50,7 @@ namespace Jupiter.Controllers
                 var carts = db.Carts.Where(x => x.CartID == id).Select(x =>
                         new CartModel
                         {
-                            CartID = x.CartID,
+                            CartId = x.CartID,
                             Price = x.Price,
                             Location = x.Location,
                             PlannedTime = x.PlannedTime,
@@ -73,7 +81,7 @@ namespace Jupiter.Controllers
             {
                 Cart newDb = new Cart
                 {
-                    CartID = newCart.CartID,
+                    CartID = newCart.CartId,
                     Price = newCart.Price,
                     Location = newCart.Location,
                     PlannedTime = newCart.PlannedTime,

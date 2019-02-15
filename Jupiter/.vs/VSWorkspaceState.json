@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\App_Start",
+    "\\Controllers",
+    "\\Models"
   ],
-  "SelectedNode": "\\Jupiter.csproj",
+  "SelectedNode": "\\Models\\CartModel.cs",
   "PreviewInSolutionExplorer": false
 }
