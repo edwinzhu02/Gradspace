@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using Jupiter.Models;
@@ -11,10 +12,9 @@ namespace Jupiter
     {
         public AutomapperWebProfile()
         {
-            CreateMap<Cart, CartModel>();
-
+            CreateMap<Cart, CartModel>().ReverseMap();
+            CreateMap<Contact, ContactModel>().ReverseMap();
         }
-
         public static void Run()
         {
             AutoMapper.Mapper.Initialize(x=>
@@ -22,6 +22,6 @@ namespace Jupiter
                 x.AddProfile<AutomapperWebProfile>();
             });
         }
-
     }
+
 }

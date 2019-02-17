@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using Jupiter.Models;
 using JupiterEntity;
 
@@ -16,17 +17,12 @@ namespace Jupiter.Controllers
             var result = new Result<List<ContactModel>>();
             using (var db = new jupiterEntities())
             {
-                var a = db.Contacts.Select(x =>
-                    new ContactModel()
-                    {
-                        ContactId = x.ContactId,
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        PhoneNum = x.PhoneNum,
-                        Email = x.Email,
-                        Message = x.Message
-                    }).ToList();
-                result.Data = a;
+                List<ContactModel> contactModels = new List<ContactModel>();
+                List<Contact> contacts = db.Contacts.ToList();
+
+                AutoMapper.Mapper.Map(contacts, contactModels);
+
+                result.Data = contactModels;
                 return Json(result);
             }
         }
@@ -36,16 +32,7 @@ namespace Jupiter.Controllers
             var result = new Result<ContactModel>();
             using (var db = new jupiterEntities())
             {
-                var a = db.Contacts.Where(x => x.ContactId == id).Select(x => 
-                    new ContactModel
-                    {
-                        ContactId = x.ContactId,
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        PhoneNum = x.PhoneNum,
-                        Email = x.Email,
-                        Message = x.Message
-                    }).FirstOrDefault();
+                var a = db.Contacts.Where(x => x.ContactId == id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
                     result.IsFound = false;
@@ -53,7 +40,9 @@ namespace Jupiter.Controllers
                     result.ErrorMessage = "Not Found";
                     return Json(result);
                 }
-                result.Data = a;
+                ContactModel contactModel = new ContactModel();
+                AutoMapper.Mapper.Map(a, contactModel);
+                result.Data = contactModel;
                 return Json(result);
             }
         }
@@ -62,12 +51,7 @@ namespace Jupiter.Controllers
         {
             var result = CheckStateModel(ModelState);
             Contact a = new Contact();
-            a.ContactId = contactModel.ContactId;
-            a.FirstName = contactModel.FirstName;
-            a.LastName = contactModel.LastName;
-            a.PhoneNum = contactModel.PhoneNum;
-            a.Email = contactModel.Email;
-            a.Message = contactModel.Message;
+            AutoMapper.Mapper.Map(contactModel, a);
             using (var db = new jupiterEntities())
             {
                 try

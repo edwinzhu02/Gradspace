@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using AutoMapper;
 using Jupiter.Models;
 using JupiterEntity;
 
@@ -16,24 +17,12 @@ namespace Jupiter.Controllers
             var result = new Result<List<CartModel>>();
             using (var db = new jupiterEntities())
             {
-                //var carts = db.Carts.Select(x =>
-                //new CartModel
-                //{
-                //    CartId = x.CartID,
-                //    Price = x.Price,
-                //    Location = x.Location,
-                //    PlannedTime = x.PlannedTime,
-                //    IsActivate = x.IsActivate,
-                //    CreateOn = x.CreateOn,
-                //    UpdateOn = x.UpdateOn,
-                //    ContactId = x.ContactId
-                //}).ToList();
-                //result.Data = carts;
-                //return Json(result);
                 List<Cart> carts = db.Carts.ToList();
                 List<CartModel> cartModels = new List<CartModel>();
 
-                AutoMapper.Mapper.Map(carts, cartModels);
+                //AutoMapper.Mapper.Map(carts, cartModels);
+
+                
 
                 result.Data = cartModels;
                 return Json(result);
@@ -79,17 +68,18 @@ namespace Jupiter.Controllers
             }
             using (var db = new jupiterEntities())
             {
-                Cart newDb = new Cart
-                {
-                    CartID = newCart.CartId,
-                    Price = newCart.Price,
-                    Location = newCart.Location,
-                    PlannedTime = newCart.PlannedTime,
-                    IsActivate = newCart.IsActivate,
-                    CreateOn = newCart.CreateOn,
-                    UpdateOn = newCart.UpdateOn,
-                    ContactId = newCart.ContactId,
-                };
+                Cart newDb = new Cart();
+                //{
+                //    CartID = newCart.CartId,
+                //    Price = newCart.Price,
+                //    Location = newCart.Location,
+                //    PlannedTime = newCart.PlannedTime,
+                //    IsActivate = newCart.IsActivate,
+                //    CreateOn = newCart.CreateOn,
+                //    UpdateOn = newCart.UpdateOn,
+                //    ContactId = newCart.ContactId,
+                //};
+                AutoMapper.Mapper.Map(newCart, newDb);
                 try
                 {
                     db.Carts.Add(newDb);
