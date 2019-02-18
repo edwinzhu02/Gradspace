@@ -14,6 +14,9 @@ namespace Jupiter
         {
             CreateMap<Cart, CartModel>().ReverseMap();
             CreateMap<Contact, ContactModel>().ReverseMap();
+            CreateMap<Product, ProductModel>().ReverseMap();
+            CreateMap<CartProd, CartProdModel>().ReverseMap();
+            CreateMap<ProductCategory, ProductCategory>().ReverseMap();
         }
         public static void Run()
         {

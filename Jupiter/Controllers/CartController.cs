@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using AutoMapper;
@@ -19,36 +20,22 @@ namespace Jupiter.Controllers
             {
                 List<Cart> carts = db.Carts.ToList();
                 List<CartModel> cartModels = new List<CartModel>();
-
-                //AutoMapper.Mapper.Map(carts, cartModels);
-
-                
-
+                Mapper.Map(carts, cartModels);
                 result.Data = cartModels;
                 return Json(result);
             }
 
         }
-
         // GET api/values/5
         public IHttpActionResult Get(int id)
         {
             var result = new Result<CartModel>();
             using (var db = new jupiterEntities())
             {
-                var carts = db.Carts.Where(x => x.CartID == id).Select(x =>
-                        new CartModel
-                        {
-                            CartId = x.CartID,
-                            Price = x.Price,
-                            Location = x.Location,
-                            PlannedTime = x.PlannedTime,
-                            IsActivate = x.IsActivate,
-                            CreateOn = x.CreateOn,
-                            UpdateOn = x.UpdateOn,
-                            ContactId = x.ContactId
-                        }).FirstOrDefault();
-                result.Data = carts;
+                var carts = db.Carts.Where(x => x.CartID == id).Select(x =>x).FirstOrDefault();
+                CartModel cartModel = new CartModel();
+                Mapper.Map(carts, cartModel);
+                result.Data = cartModel;
                 if (carts == null)
                 {
                     result.IsFound = false;
@@ -69,17 +56,8 @@ namespace Jupiter.Controllers
             using (var db = new jupiterEntities())
             {
                 Cart newDb = new Cart();
-                //{
-                //    CartID = newCart.CartId,
-                //    Price = newCart.Price,
-                //    Location = newCart.Location,
-                //    PlannedTime = newCart.PlannedTime,
-                //    IsActivate = newCart.IsActivate,
-                //    CreateOn = newCart.CreateOn,
-                //    UpdateOn = newCart.UpdateOn,
-                //    ContactId = newCart.ContactId,
-                //};
-                AutoMapper.Mapper.Map(newCart, newDb);
+
+                Mapper.Map(newCart, newDb);
                 try
                 {
                     db.Carts.Add(newDb);
@@ -98,6 +76,8 @@ namespace Jupiter.Controllers
         public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
         {
             var result = CheckStateModel(ModelState);
+            var properties = cartModel.GetType().GetProperties();
+            Type cartType = typeof(Cart);
             if (result.IsSuccess == false)
             {
                 return Json(result);
@@ -110,13 +90,14 @@ namespace Jupiter.Controllers
                     result.IsFound = false;
                     return Json(result);
                 }
-                updated.Price = cartModel.Price ?? updated.Price;
-                updated.Location = cartModel.Location ?? updated.Location;
-                updated.PlannedTime = cartModel.PlannedTime ?? updated.PlannedTime;
-                updated.IsActivate = cartModel.IsActivate ?? updated.IsActivate;
-                updated.CreateOn = cartModel.CreateOn ?? updated.CreateOn;
-                updated.UpdateOn = cartModel.UpdateOn ?? updated.UpdateOn;
-                updated.ContactId = cartModel.ContactId ?? updated.ContactId;
+                foreach (var prop in properties)
+                {
+                    PropertyInfo piInstance = cartType.GetProperty(prop.Name);
+                    if (piInstance != null && prop.GetValue(cartModel) != null)
+                    {
+                        piInstance.SetValue(updated,prop.GetValue(cartModel));
+                    }           
+                }
                 try
                 {
                     db.SaveChanges();
@@ -130,7 +111,6 @@ namespace Jupiter.Controllers
             }
 
         }
-
         // DELETE api/values/5
         public IHttpActionResult Delete(int id)
         {

@@ -8,11 +8,13 @@ namespace Jupiter.Models
 {
     public class CartModel
     {
+        [Required(ErrorMessage = "Cart Id is required")]
         public int CartId { get; set; }
         public decimal? Price { get; set; }
         [Required (ErrorMessage ="Location is Required.")]
         public string Location { get; set; }
         public DateTime? PlannedTime { get; set; }
+        [Range(0, 1, ErrorMessage = "IsActivate must be either 0 or 1")]
         public byte? IsActivate { get; set; }
         public DateTime? CreateOn { get; set; }
         public DateTime? UpdateOn { get; set; }
