@@ -76,7 +76,6 @@ namespace Jupiter.Controllers
         public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
         {
             var result = CheckStateModel(ModelState);
-            var properties = cartModel.GetType().GetProperties();
             Type cartType = typeof(Cart);
             if (result.IsSuccess == false)
             {
@@ -90,14 +89,8 @@ namespace Jupiter.Controllers
                     result.IsFound = false;
                     return Json(result);
                 }
-                foreach (var prop in properties)
-                {
-                    PropertyInfo piInstance = cartType.GetProperty(prop.Name);
-                    if (piInstance != null && prop.GetValue(cartModel) != null)
-                    {
-                        piInstance.SetValue(updated,prop.GetValue(cartModel));
-                    }           
-                }
+                base.UpdateTable(cartModel,cartType,updated);
+
                 try
                 {
                     db.SaveChanges();

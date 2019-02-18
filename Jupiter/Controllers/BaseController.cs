@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 
@@ -29,6 +30,19 @@ namespace Jupiter.Controllers
                 return result;
             }
             return result;
+        }
+
+        public void UpdateTable(object model, Type type, object tableRow)
+        {
+            var properties = model.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                PropertyInfo piInstance = type.GetProperty(prop.Name);
+                if (piInstance != null && prop.GetValue(model) != null)
+                {
+                    piInstance.SetValue(tableRow,prop.GetValue(model));
+                }           
+            }
         }
         private bool SetCurrentUser()
         {
