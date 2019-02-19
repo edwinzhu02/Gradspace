@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Http;
 using AutoMapper;
+using Jupiter.ActionFilter;
 using Jupiter.Models;
 using JupiterEntity;
 
 namespace Jupiter.Controllers
-{
+{   
     public class CartController : BaseController
     {
         // GET api/values
@@ -46,13 +45,11 @@ namespace Jupiter.Controllers
         }
 
         // POST api/values
+        [ResultFilter]
         public IHttpActionResult Post([FromBody]CartModel newCart)
         {
-            var result = CheckStateModel(ModelState);
-            if (result.IsSuccess == false)
-            {
-                return Json(result);
-            }
+            var result = new Result<string>();
+
             using (var db = new jupiterEntities())
             {
                 Cart newDb = new Cart();
@@ -73,14 +70,14 @@ namespace Jupiter.Controllers
         }
 
         // PUT api/values/5
+        [ResultFilter]
         public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
         {
-            var result = CheckStateModel(ModelState);
+
+            var result = new Result<string>();
+
             Type cartType = typeof(Cart);
-            if (result.IsSuccess == false)
-            {
-                return Json(result);
-            }
+
             using (var db = new jupiterEntities())
             {
                 Cart updated = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
@@ -89,7 +86,8 @@ namespace Jupiter.Controllers
                     result.IsFound = false;
                     return Json(result);
                 }
-                base.UpdateTable(cartModel,cartType,updated);
+
+                UpdateTable(cartModel,cartType,updated);
 
                 try
                 {
