@@ -91,5 +91,31 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
         }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var result = new Result<String>();
+            using (var db = new jupiterEntities())
+            {
+                var a = db.CartProds.Where(x => x.ID == id).Select(x => x).FirstOrDefault();
+                if (a == null)
+                {
+                    return Json(NotFound(result));
+                }
+
+                try
+                {
+                    db.CartProds.Remove(a);
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    result.ErrorMessage = e.Message;
+                    result.IsSuccess = false;
+                    return Json(result);
+                }
+                return Json(result);
+            }
+        }
     }
 }
