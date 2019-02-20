@@ -46,11 +46,9 @@ namespace Jupiter.Controllers
         // POST api/values
         // multi action errors
         [ResultFilter]
-        [HttpPost]
         public IHttpActionResult Post([FromBody]CartModel newCart)
         {
             var result = new Result<string>();
-
             using (var db = new jupiterEntities())
             {
                 Cart newDb = new Cart();

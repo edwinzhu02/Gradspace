@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
-//using System.Web.Mvc;
+using AutoMapper;
+using Jupiter.ActionFilter;
 using Jupiter.Models;
 using JupiterEntity;
-using Newtonsoft.Json;
-
 
 namespace Jupiter.Controllers
 {
@@ -21,7 +19,7 @@ namespace Jupiter.Controllers
             {
                 List<ProductCategoryModel> productCategoryModels = new List<ProductCategoryModel>();
                 List<ProductCategory> productCategories = db.ProductCategories.ToList();
-                AutoMapper.Mapper.Map(productCategories, productCategoryModels);
+                Mapper.Map(productCategories, productCategoryModels);
                 result.Data = productCategoryModels;
                 return Json(result);
             }
@@ -38,27 +36,24 @@ namespace Jupiter.Controllers
                     return Json(NotFound(result));
                 }
                 ProductCategoryModel productCategoryModel = new ProductCategoryModel();
-                AutoMapper.Mapper.Map(a, productCategoryModel);
+                Mapper.Map(a, productCategoryModel);
                 result.Data = productCategoryModel;
                 return Json(result);
             }
         }
             //add
-            public IHttpActionResult Post([FromBody] ProductCategoryModel _productCategory)
+        [ResultFilter]
+        public IHttpActionResult Post([FromBody] ProductCategoryModel productCategory)
         {
             var result = new Result<string>();
-            result = base.CheckStateModel(ModelState);
-            if (result.IsSuccess == false) return Json(result);
             using (var db = new jupiterEntities())
             {
-                ProductCategory cate = new ProductCategory
-                {
-                    //CategroyId = _productCategory.Id,
-                    CategroyName = _productCategory.CategoryName
-                };
+                ProductCategory proCategory = new ProductCategory();
+
+                Mapper.Map(productCategory, proCategory);
                 try
                 {
-                    db.ProductCategories.Add(cate);
+                    db.ProductCategories.Add(proCategory);
                     db.SaveChanges();
                 }
                 catch (Exception e)
@@ -70,22 +65,19 @@ namespace Jupiter.Controllers
             }
         }
         //update
-        public IHttpActionResult Put(int id, [FromBody]ProductCategory _newCategpty)
+        [ResultFilter]
+        public IHttpActionResult Put(int id, [FromBody]ProductCategoryModel upCategory)
         {
             var result = new Result<string>();
-            //??????????
-            result = base.CheckStateModel(ModelState);
-            if (result.IsSuccess == false) return Json(result);
             using (var dbContext = new jupiterEntities())
             {
                 ProductCategory updatedCate = dbContext.ProductCategories.Where(x => x.CategroyId == id).Select(x => x).FirstOrDefault();
                 if (updatedCate == null)
                 {
-                    result.IsFound = true;
-                    result.ErrorMessage = "Not Found";
-                    return Json(result);
+                    return Json(NotFound(result));
                 }
-                updatedCate.CategroyName = _newCategpty.CategroyName ?? updatedCate.CategroyName;
+                Type type = typeof(ProductCategory);
+                UpdateTable(upCategory,type,updatedCate);
                 try
                 {
                     dbContext.SaveChanges();
@@ -101,14 +93,12 @@ namespace Jupiter.Controllers
         public IHttpActionResult Delete(int id)
         {
             var result = new Result<string>();
-            result = base.CheckStateModel(ModelState);
             using (var db = new jupiterEntities())
             {
                 ProductCategory del = db.ProductCategories.FirstOrDefault(x => x.CategroyId == id);
                 if (del == null)
                 {
-                    result.ErrorMessage = "Not Found";
-                    return Json(result);
+                    return Json(NotFound(result));
                 }
                 try
                 {

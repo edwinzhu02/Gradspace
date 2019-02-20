@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -8,7 +7,7 @@ namespace Jupiter.Models
 {
     public class ProductCategoryModel
     {
-        public int? Id { get; set; }
-        public string CategoryName { get; set; }
+        public int? CategroyId { get; set; }
+        public string CategroyName { get; set; }
     }
 }

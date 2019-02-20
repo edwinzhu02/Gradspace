@@ -11,11 +11,9 @@ namespace Jupiter.Models
 {
     public class ProductModel
     {
-        public int ProdId { get; set; }
-        [Required(ErrorMessage = "Product Type is required")]
-        public Nullable<int> ProdTypeId { get; set; }
-        [Required(ErrorMessage = "Categroy is required")]
-        public Nullable<int> CategroyId { get; set; }
+        public int? ProdId { get; set; }
+        public int? ProdTypeId { get; set; }
+        public int? CategroyId { get; set; }
         public string ProdTypeName { get; set; }
         public string CategroyName { get; set; }
         [Required(ErrorMessage = "Title is required")]
@@ -24,16 +22,16 @@ namespace Jupiter.Models
         public string SubTitle { get; set; }
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
-        public Nullable<int> TotalStock { get; set; }
-        public Nullable<int> AvailableStock { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public int? TotalStock { get; set; }
+        public int? AvailableStock { get; set; }
+        public decimal? Price { get; set; }
         [Range(0, 1, ErrorMessage = "SpcOrDisct must be a number between 0 and 1")]
-        public Nullable<short> SpcOrDisct { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> SpecialPrice { get; set; }
+        public short? SpcOrDisct { get; set; }
+        public decimal? Discount { get; set; }
+        public decimal? SpecialPrice { get; set; }
         [Range(0, 1, ErrorMessage = "IsActivate must be a number between 0 and 1")]
-        public Nullable<byte> IsActivate { get; set; }
-        public Nullable<System.DateTime> CreateOn { get; set; }
+        public byte? IsActivate { get; set; }
+        public DateTime? CreateOn { get; set; }
         public List<string> ProdMedias { get; set; }
     }
 }
