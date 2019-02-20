@@ -32,13 +32,13 @@ namespace Jupiter.Controllers
             using (var db = new jupiterEntities())
             {
                 var carts = db.Carts.Where(x => x.CartID == id).Select(x =>x).FirstOrDefault();
-                CartModel cartModel = new CartModel();
-                Mapper.Map(carts, cartModel);
-                result.Data = cartModel;
                 if (carts == null)
                 {
                     return Json(NotFound(result));
                 }
+                CartModel cartModel = new CartModel();
+                Mapper.Map(carts, cartModel);
+                result.Data = cartModel;
                 return Json(result);
             }
         }
