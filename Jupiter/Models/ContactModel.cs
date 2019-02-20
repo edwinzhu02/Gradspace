@@ -8,7 +8,7 @@ namespace Jupiter.Models
 {
     public class ContactModel
     {
-        public int ContactId { get; set; }
+        public int? ContactId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNum { get; set; }

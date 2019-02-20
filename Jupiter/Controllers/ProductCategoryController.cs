@@ -19,18 +19,32 @@ namespace Jupiter.Controllers
             var result = new Result<List<ProductCategoryModel>>();
             using( var db = new jupiterEntities())
             {
-                var  cate = db.ProductCategories.Select(x =>
-                new ProductCategoryModel
-                { 
-                    Id = x.CategroyId,
-                    CategoryName = x.CategroyName
-                }).ToList();
-                result.Data = cate;
+                List<ProductCategoryModel> productCategoryModels = new List<ProductCategoryModel>();
+                List<ProductCategory> productCategories = db.ProductCategories.ToList();
+                AutoMapper.Mapper.Map(productCategories, productCategoryModels);
+                result.Data = productCategoryModels;
                 return Json(result);
             }
         }
-        //add
-        public IHttpActionResult Post([FromBody] ProductCategoryModel _productCategory)
+
+        public IHttpActionResult Get(int id)
+        {
+            var result = new Result<ProductCategoryModel>();
+            using (var db = new jupiterEntities())
+            {
+                var a = db.ProductCategories.Where(x => x.CategroyId == id).Select(x => x).FirstOrDefault();
+                if (a == null)
+                {
+                    return Json(NotFound(result));
+                }
+                ProductCategoryModel productCategoryModel = new ProductCategoryModel();
+                AutoMapper.Mapper.Map(a, productCategoryModel);
+                result.Data = productCategoryModel;
+                return Json(result);
+            }
+        }
+            //add
+            public IHttpActionResult Post([FromBody] ProductCategoryModel _productCategory)
         {
             var result = new Result<string>();
             result = base.CheckStateModel(ModelState);
@@ -39,7 +53,7 @@ namespace Jupiter.Controllers
             {
                 ProductCategory cate = new ProductCategory
                 {
-                    CategroyId = _productCategory.Id,
+                    //CategroyId = _productCategory.Id,
                     CategroyName = _productCategory.CategoryName
                 };
                 try

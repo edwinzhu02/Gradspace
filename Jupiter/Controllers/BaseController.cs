@@ -32,7 +32,7 @@ namespace Jupiter.Controllers
             return result;
         }
 
-        public void UpdateTable(object model, Type type, object tableRow)
+        protected void UpdateTable(object model, Type type, object tableRow)
         {
             var properties = model.GetType().GetProperties();
             foreach (var prop in properties)
@@ -43,6 +43,14 @@ namespace Jupiter.Controllers
                     piInstance.SetValue(tableRow,prop.GetValue(model));
                 }           
             }
+        }
+
+        protected Result<T> NotFound <T>(Result<T> tResult)
+        {
+            tResult.IsSuccess = false;
+            tResult.IsFound = false;
+            tResult.ErrorMessage = "Not Found";
+            return tResult;
         }
         private bool SetCurrentUser()
         {

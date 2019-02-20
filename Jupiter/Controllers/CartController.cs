@@ -37,15 +37,16 @@ namespace Jupiter.Controllers
                 result.Data = cartModel;
                 if (carts == null)
                 {
-                    result.IsFound = false;
-                    return Json(result);
+                    return Json(NotFound(result));
                 }
                 return Json(result);
             }
         }
 
         // POST api/values
+        // multi action errors
         [ResultFilter]
+        [HttpPost]
         public IHttpActionResult Post([FromBody]CartModel newCart)
         {
             var result = new Result<string>();
@@ -73,22 +74,16 @@ namespace Jupiter.Controllers
         [ResultFilter]
         public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
         {
-
             var result = new Result<string>();
-
             Type cartType = typeof(Cart);
-
             using (var db = new jupiterEntities())
             {
                 Cart updated = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
                 if (updated == null)
                 {
-                    result.IsFound = false;
-                    return Json(result);
+                    return Json(NotFound(result));
                 }
-
                 UpdateTable(cartModel,cartType,updated);
-
                 try
                 {
                     db.SaveChanges();
@@ -97,10 +92,10 @@ namespace Jupiter.Controllers
                 {
                     result.ErrorMessage = e.Message;
                     result.IsSuccess = false;
+                    return Json(result);
                 }
                 return Json(result);
             }
-
         }
         // DELETE api/values/5
         public IHttpActionResult Delete(int id)
@@ -111,13 +106,11 @@ namespace Jupiter.Controllers
                 Cart del = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
                 if (del == null)
                 {
-                    result.IsFound = false;
-                    return Json(result);
+                    return Json(NotFound(result));
                 }
                 try
                 {
                     del.IsActivate = 0;
-                    //db.Carts.Remove(del);
                     db.SaveChanges();
                 }
                 catch (Exception e)

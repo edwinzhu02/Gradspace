@@ -8,8 +8,7 @@ namespace Jupiter.Models
 {
     public class CartProdModel
     {
-        [Required(ErrorMessage = "Cart production Id is required.")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int? CartId { get; set; }
         public int? ProdId { get; set; }
         public decimal? Price { get; set; }

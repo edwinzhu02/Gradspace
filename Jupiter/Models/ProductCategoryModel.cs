@@ -8,8 +8,7 @@ namespace Jupiter.Models
 {
     public class ProductCategoryModel
     {
-        [Required(ErrorMessage = "Categoty Id is required.")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string CategoryName { get; set; }
     }
 }
