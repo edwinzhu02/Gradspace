@@ -44,7 +44,7 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
         }
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Post([FromBody]ContactModel contactModel)
         {
             var result = new Result<string>();
@@ -68,7 +68,7 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
         }
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Put(int id, [FromBody] ContactModel contactModel)
         {
             var result = new Result<string>();

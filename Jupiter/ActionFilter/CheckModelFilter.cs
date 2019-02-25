@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Jupiter.ActionFilter
 {
-    public class ResultFilter : ActionFilterAttribute
+    public class CheckModelFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting (HttpActionContext  filterContext)
         {

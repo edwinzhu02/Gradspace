@@ -138,7 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionFilter\ResultFilter.cs" />
+    <Compile Include="ActionFilter\CheckModelFilter.cs" />
     <Compile Include="App_Start\AutomapperWebProfile.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -176,9 +176,11 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CartProdController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\EventTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TestimonialController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Enums\enums.cs" />
@@ -188,8 +190,10 @@
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\CartProdModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\EventTypeModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\TestimonialModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

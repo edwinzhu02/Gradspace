@@ -45,7 +45,7 @@ namespace Jupiter.Controllers
             }
         }
 
-        protected Result<T> NotFound <T>(Result<T> tResult)
+        protected Result<T> DataNotFound <T>(Result<T> tResult)
         {
             tResult.IsSuccess = false;
             tResult.IsFound = false;

@@ -7,7 +7,7 @@ namespace Jupiter.Models
 {
     public class ProductCategoryModel
     {
-        public int? CategroyId { get; set; }
-        public string CategroyName { get; set; }
+        public int? CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }

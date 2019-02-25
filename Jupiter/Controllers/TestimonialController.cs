@@ -33,7 +33,7 @@ namespace Jupiter.Controllers
             TestimonialModel testimonialModel = new TestimonialModel();
             if (testimonial == null)
             {
-                return Json(NotFound(result));
+                return Json(DataNotFound(result));
             }
 
             Mapper.Map(testimonial, testimonialModel);
@@ -42,7 +42,7 @@ namespace Jupiter.Controllers
         }
 
         // PUT: api/Testimonial/5
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Put(int id, [FromBody]TestimonialModel testimonialModel)
         {
             var result = new Result<String>();
@@ -51,7 +51,7 @@ namespace Jupiter.Controllers
             var a = db.Testimonials.Where(x => x.TestimonialId == id).Select(x => x).FirstOrDefault();
             if (a == null)
             {
-                return Json(NotFound(result));
+                return Json(DataNotFound(result));
             }
             Type type = typeof(Testimonial);
             UpdateTable(testimonialModel, type, a);
@@ -70,7 +70,7 @@ namespace Jupiter.Controllers
         }
         // POST: api/Testimonial
         // [ResponseType(typeof(Testimonial))]
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Post([FromBody]TestimonialModel testimonialModel)
         {
             var result = new Result<TestimonialModel>();
@@ -100,7 +100,7 @@ namespace Jupiter.Controllers
             Testimonial testimonial = db.Testimonials.Find(id);
             if (testimonial == null)
             {
-                return Json(NotFound(result));
+                return Json(DataNotFound(result));
             }
             try
             {

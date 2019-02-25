@@ -33,7 +33,7 @@ namespace Jupiter.Controllers
                 var a = db.CartProds.Where(x => x.ID == id).Select(x=>x).FirstOrDefault();
                 if (a == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
                 Mapper.Map(a, cartProdModel);
                 result.Data = cartProdModel;
@@ -42,7 +42,7 @@ namespace Jupiter.Controllers
         }
 
         //add
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Post([FromBody] CartProdModel cartProdModel)
         {
             var result = new Result<String>();
@@ -65,7 +65,7 @@ namespace Jupiter.Controllers
             }
         }
         //update
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Put(int id, [FromBody] CartProdModel cartProdModel)
         {
             var result = new Result<String>();
@@ -75,7 +75,7 @@ namespace Jupiter.Controllers
                 var a = db.CartProds.Where(x => x.ID==id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
                 UpdateTable(cartProdModel,type,a);
                 try
@@ -100,7 +100,7 @@ namespace Jupiter.Controllers
                 var a = db.CartProds.Where(x => x.ID == id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
 
                 try

@@ -86,9 +86,9 @@
   </EntityType>
   <EntityType Name="Project">
     <Key>
-      <PropertyRef Name="ProdjectId" />
+      <PropertyRef Name="ProjectId" />
     </Key>
-    <Property Name="ProdjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="2048" />
     <Property Name="EventtypeId" Type="int" />
     <Property Name="CustomerName" Type="nvarchar" MaxLength="255" />
@@ -199,7 +199,7 @@
     <End Role="ProjectMedia" Type="Self.ProjectMedia" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
-        <PropertyRef Name="ProdjectId" />
+        <PropertyRef Name="ProjectId" />
       </Principal>
       <Dependent Role="ProjectMedia">
         <PropertyRef Name="ProjectId" />

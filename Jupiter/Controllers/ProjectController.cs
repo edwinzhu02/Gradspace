@@ -1,86 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using AutoMapper;
 using Jupiter.ActionFilter;
 using Jupiter.Models;
 using JupiterEntity;
 
 namespace Jupiter.Controllers
-{   
-    public class CartController : BaseController
+{
+    public class ProjectController : BaseController
     {
-        // GET api/values
+        // GET: api/Project
         public IHttpActionResult Get()
         {
-            var result = new Result<List<CartModel>>();
+            var result = new Result<List<ProjectModel>>();
+            List<ProjectModel> projectModels = new List<ProjectModel>();
             using (var db = new jupiterEntities())
             {
-                List<Cart> carts = db.Carts.ToList();
-                List<CartModel> cartModels = new List<CartModel>();
-                Mapper.Map(carts, cartModels);
-                result.Data = cartModels;
+                List < Project > projects= db.Projects.ToList();
+                Mapper.Map(projects, projectModels);
+                result.Data = projectModels;
                 return Json(result);
             }
-
         }
-        // GET api/values/5
-        public IHttpActionResult Get(int id)
+
+        // GET: api/Project/5
+        public IHttpActionResult GetProject(int id)
         {
-            var result = new Result<CartModel>();
+            var result = new Result<ProjectModel>();
+            ProjectModel projectModel  = new ProjectModel();
             using (var db = new jupiterEntities())
             {
-                var carts = db.Carts.Where(x => x.CartID == id).Select(x =>x).FirstOrDefault();
-                if (carts == null)
+                Project project = db.Projects.Find(id);
+                if (project == null)
                 {
                     return Json(DataNotFound(result));
                 }
-                CartModel cartModel = new CartModel();
-                Mapper.Map(carts, cartModel);
-                result.Data = cartModel;
+
+                Mapper.Map(project, projectModel);
+                result.Data = projectModel;
                 return Json(result);
             }
         }
 
-        // POST api/values
+        // PUT: api/Project/5
         [CheckModelFilter]
-        public IHttpActionResult Post([FromBody]CartModel newCart)
+        public IHttpActionResult PutProject(int id, ProjectModel projectModel)
         {
             var result = new Result<string>();
             using (var db = new jupiterEntities())
             {
-                Cart newDb = new Cart();
+                var a = db.Projects.Where(x => x.ProjectId == id).Select(x => x).FirstOrDefault();
+                if (a == null)
+                {
+                    return Json(DataNotFound(result));
+                }
 
-                Mapper.Map(newCart, newDb);
+                Type type = typeof(Project);
+                UpdateTable(projectModel,type,a);
+
                 try
                 {
-                    db.Carts.Add(newDb);
                     db.SaveChanges();
                 }
                 catch (Exception e)
                 {
                     result.ErrorMessage = e.Message;
                     result.IsSuccess = false;
+                    return Json(result);
                 }
-                return Json(result);
             }
+            return Json(result);
         }
 
-        // PUT api/values/5
+        // POST: api/Project
         [CheckModelFilter]
-        public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
+        public IHttpActionResult PostProject(ProjectModel projectModel)
         {
             var result = new Result<string>();
-            Type cartType = typeof(Cart);
             using (var db = new jupiterEntities())
             {
-                Cart updated = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
-                if (updated == null)
-                {
-                    return Json(DataNotFound(result));
-                }
-                UpdateTable(cartModel,cartType,updated);
+                Project project = new Project();
+                Mapper.Map(projectModel, project);
+                db.Projects.Add(project);
                 try
                 {
                     db.SaveChanges();
@@ -94,30 +103,32 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
         }
-        // DELETE api/values/5
-        public IHttpActionResult Delete(int id)
+
+        // DELETE: api/Project/5
+        public IHttpActionResult DeleteProject(int id)
         {
             var result = new Result<string>();
             using (var db = new jupiterEntities())
             {
-                Cart del = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
-                if (del == null)
+                Project project = db.Projects.Find(id);
+                if (project == null)
                 {
                     return Json(DataNotFound(result));
                 }
+
                 try
                 {
-                    del.IsActivate = 0;
+                    db.Projects.Remove(project);
                     db.SaveChanges();
                 }
                 catch (Exception e)
                 {
                     result.ErrorMessage = e.Message;
                     result.IsSuccess = false;
+                    return Json(result);
                 }
-                return Json(result);
             }
-
+            return Json(result);
         }
     }
 }

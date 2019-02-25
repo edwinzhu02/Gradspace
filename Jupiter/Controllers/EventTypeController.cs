@@ -8,79 +8,56 @@ using Jupiter.Models;
 using JupiterEntity;
 
 namespace Jupiter.Controllers
-{   
-    public class CartController : BaseController
+{
+    public class EventTypeController : BaseController
     {
-        // GET api/values
+        // GET: api/EventType
         public IHttpActionResult Get()
         {
-            var result = new Result<List<CartModel>>();
+            var result = new Result<List<EventTypeModel>>();
+            List<EventTypeModel> eventTypeModels = new List<EventTypeModel>();
             using (var db = new jupiterEntities())
             {
-                List<Cart> carts = db.Carts.ToList();
-                List<CartModel> cartModels = new List<CartModel>();
-                Mapper.Map(carts, cartModels);
-                result.Data = cartModels;
-                return Json(result);
+                List<EventType> eventTypes = db.EventTypes.ToList();
+                Mapper.Map(eventTypes, eventTypeModels);
+                result.Data = eventTypeModels;
             }
+            return Json(result);
+        } 
 
-        }
-        // GET api/values/5
+        // GET: api/EventType/5
         public IHttpActionResult Get(int id)
         {
-            var result = new Result<CartModel>();
+            var result = new Result<EventTypeModel>();
             using (var db = new jupiterEntities())
             {
-                var carts = db.Carts.Where(x => x.CartID == id).Select(x =>x).FirstOrDefault();
-                if (carts == null)
+                EventType eventType = db.EventTypes.Find(id);
+                EventTypeModel eventTypeModel = new EventTypeModel();
+                if (eventType == null)
                 {
                     return Json(DataNotFound(result));
                 }
-                CartModel cartModel = new CartModel();
-                Mapper.Map(carts, cartModel);
-                result.Data = cartModel;
-                return Json(result);
+                Mapper.Map(eventType, eventTypeModel);
+                result.Data = eventTypeModel;
             }
+            return Json(result);
         }
 
-        // POST api/values
+        // PUT: api/EventType/5
         [CheckModelFilter]
-        public IHttpActionResult Post([FromBody]CartModel newCart)
+        public IHttpActionResult Put(int id, EventTypeModel eventTypeModel)
         {
             var result = new Result<string>();
             using (var db = new jupiterEntities())
             {
-                Cart newDb = new Cart();
-
-                Mapper.Map(newCart, newDb);
-                try
-                {
-                    db.Carts.Add(newDb);
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    result.ErrorMessage = e.Message;
-                    result.IsSuccess = false;
-                }
-                return Json(result);
-            }
-        }
-
-        // PUT api/values/5
-        [CheckModelFilter]
-        public IHttpActionResult Put(int id, [FromBody]CartModel cartModel)
-        {
-            var result = new Result<string>();
-            Type cartType = typeof(Cart);
-            using (var db = new jupiterEntities())
-            {
-                Cart updated = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
-                if (updated == null)
+                var a = db.EventTypes.Where(x => x.TypeId == id).Select(x => x).FirstOrDefault();
+                if (a == null)
                 {
                     return Json(DataNotFound(result));
                 }
-                UpdateTable(cartModel,cartType,updated);
+
+                Type type = typeof(EventType);
+                UpdateTable(eventTypeModel,type,a);
                 try
                 {
                     db.SaveChanges();
@@ -91,33 +68,59 @@ namespace Jupiter.Controllers
                     result.IsSuccess = false;
                     return Json(result);
                 }
-                return Json(result);
             }
+            return Json(result);
         }
-        // DELETE api/values/5
-        public IHttpActionResult Delete(int id)
+
+        // POST: api/EventType
+        [CheckModelFilter]
+        public IHttpActionResult Post(EventTypeModel eventTypeModel)
         {
             var result = new Result<string>();
+            EventType eventType = new EventType();
+            Mapper.Map(eventTypeModel, eventType);
             using (var db = new jupiterEntities())
             {
-                Cart del = db.Carts.Where(x => x.CartID == id).Select(x => x).FirstOrDefault();
-                if (del == null)
-                {
-                    return Json(DataNotFound(result));
-                }
                 try
                 {
-                    del.IsActivate = 0;
+                    db.EventTypes.Add(eventType);
                     db.SaveChanges();
                 }
                 catch (Exception e)
                 {
                     result.ErrorMessage = e.Message;
                     result.IsSuccess = false;
+                    return Json(result);
                 }
-                return Json(result);
             }
+            return Json(result);
+        }
 
+        // DELETE: api/EventType/5
+        [CheckModelFilter]
+        public IHttpActionResult Delete(int id)
+        {
+            var result = new Result<string>();
+            using (var db = new jupiterEntities())
+            {
+                EventType eventType = db.EventTypes.Find(id);
+                if (eventType == null)
+                {
+                    return Json(DataNotFound(result));
+                }
+                try
+                {
+                    db.EventTypes.Remove(eventType);
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    result.ErrorMessage = e.Message;
+                    result.IsSuccess = false;
+                    return Json(result);
+                }
+            }
+            return Json(result);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Jupiter
             CreateMap<CartProd, CartProdModel>().ReverseMap();
             CreateMap<ProductCategory, ProductCategoryModel>().ReverseMap();
             CreateMap<Testimonial,TestimonialModel>().ReverseMap();
+            CreateMap<EventType, EventTypeModel>().ReverseMap();
+            CreateMap<Project, ProjectModel>().ReverseMap();
         }
         public static void Run()
         {

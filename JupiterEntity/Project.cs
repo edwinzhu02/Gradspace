@@ -20,7 +20,7 @@ namespace JupiterEntity
             this.ProjectMedias = new HashSet<ProjectMedia>();
         }
     
-        public int ProdjectId { get; set; }
+        public int ProjectId { get; set; }
         public string Description { get; set; }
         public Nullable<int> EventtypeId { get; set; }
         public string CustomerName { get; set; }

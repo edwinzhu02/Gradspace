@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\App_Start",
-    "\\Controllers",
     "\\Models"
   ],
-  "SelectedNode": "\\Models\\CartModel.cs",
+  "SelectedNode": "\\Models",
   "PreviewInSolutionExplorer": false
 }

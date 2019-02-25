@@ -33,7 +33,7 @@ namespace Jupiter.Controllers
                 var a = db.ProductCategories.Where(x => x.CategroyId == id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
                 ProductCategoryModel productCategoryModel = new ProductCategoryModel();
                 Mapper.Map(a, productCategoryModel);
@@ -42,7 +42,7 @@ namespace Jupiter.Controllers
             }
         }
             //add
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Post([FromBody] ProductCategoryModel productCategory)
         {
             var result = new Result<string>();
@@ -65,7 +65,7 @@ namespace Jupiter.Controllers
             }
         }
         //update
-        [ResultFilter]
+        [CheckModelFilter]
         public IHttpActionResult Put(int id, [FromBody]ProductCategoryModel upCategory)
         {
             var result = new Result<string>();
@@ -74,7 +74,7 @@ namespace Jupiter.Controllers
                 ProductCategory updatedCate = dbContext.ProductCategories.Where(x => x.CategroyId == id).Select(x => x).FirstOrDefault();
                 if (updatedCate == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
                 Type type = typeof(ProductCategory);
                 UpdateTable(upCategory,type,updatedCate);
@@ -98,7 +98,7 @@ namespace Jupiter.Controllers
                 ProductCategory del = db.ProductCategories.FirstOrDefault(x => x.CategroyId == id);
                 if (del == null)
                 {
-                    return Json(NotFound(result));
+                    return Json(DataNotFound(result));
                 }
                 try
                 {
