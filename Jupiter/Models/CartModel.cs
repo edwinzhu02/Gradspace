@@ -8,7 +8,7 @@ namespace Jupiter.Models
 {
     public class CartModel
     {
-        public int? CartID { get; set; }
+        public int? CartId { get; set; }
         public decimal? Price { get; set; }
         [Required (ErrorMessage ="Location is Required.")]
         public string Location { get; set; }

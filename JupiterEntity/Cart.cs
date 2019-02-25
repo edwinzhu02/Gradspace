@@ -20,7 +20,7 @@ namespace JupiterEntity
             this.CartProds = new HashSet<CartProd>();
         }
     
-        public int CartID { get; set; }
+        public int CartId { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Location { get; set; }
         public Nullable<System.DateTime> PlannedTime { get; set; }

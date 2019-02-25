@@ -2,9 +2,9 @@
 <Schema Namespace="jupiterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Cart">
     <Key>
-      <PropertyRef Name="CartID" />
+      <PropertyRef Name="CartId" />
     </Key>
-    <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
     <Property Name="Location" Type="nvarchar" MaxLength="255" />
     <Property Name="PlannedTime" Type="datetime" />
@@ -127,7 +127,7 @@
     <End Role="CartProd" Type="Self.CartProd" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Cart">
-        <PropertyRef Name="CartID" />
+        <PropertyRef Name="CartId" />
       </Principal>
       <Dependent Role="CartProd">
         <PropertyRef Name="CartId" />

@@ -4,7 +4,7 @@
     <EntitySetMapping Name="Carts">
       <EntityTypeMapping TypeName="jupiterModel.Cart">
         <MappingFragment StoreEntitySet="Cart">
-          <ScalarProperty Name="CartID" ColumnName="CartID" />
+          <ScalarProperty Name="CartId" ColumnName="CartId" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Location" ColumnName="Location" />
           <ScalarProperty Name="PlannedTime" ColumnName="PlannedTime" />

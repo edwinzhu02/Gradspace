@@ -7,9 +7,9 @@
       <Schema Namespace="jupiterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cart">
           <Key>
-            <PropertyRef Name="CartID" />
+            <PropertyRef Name="CartId" />
           </Key>
-          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Location" Type="nvarchar" MaxLength="255" />
           <Property Name="PlannedTime" Type="datetime" />
@@ -20,9 +20,9 @@
         </EntityType>
         <EntityType Name="CartProd">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CartId" Type="int" />
           <Property Name="ProdId" Type="int" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
@@ -132,7 +132,7 @@
           <End Role="CartProd" Type="Self.CartProd" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cart">
-              <PropertyRef Name="CartID" />
+              <PropertyRef Name="CartId" />
             </Principal>
             <Dependent Role="CartProd">
               <PropertyRef Name="CartId" />
@@ -279,9 +279,9 @@
       <Schema Namespace="jupiterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Cart">
           <Key>
-            <PropertyRef Name="CartID" />
+            <PropertyRef Name="CartId" />
           </Key>
-          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PlannedTime" Type="DateTime" Precision="3" />
@@ -294,9 +294,9 @@
         </EntityType>
         <EntityType Name="CartProd">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartId" Type="Int32" />
           <Property Name="ProdId" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
@@ -422,7 +422,7 @@
           <End Role="CartProd" Type="Self.CartProd" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cart">
-              <PropertyRef Name="CartID" />
+              <PropertyRef Name="CartId" />
             </Principal>
             <Dependent Role="CartProd">
               <PropertyRef Name="CartId" />
@@ -571,7 +571,7 @@
           <EntitySetMapping Name="Carts">
             <EntityTypeMapping TypeName="jupiterModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="CartID" ColumnName="CartID" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="PlannedTime" ColumnName="PlannedTime" />
@@ -585,7 +585,7 @@
           <EntitySetMapping Name="CartProds">
             <EntityTypeMapping TypeName="jupiterModel.CartProd">
               <MappingFragment StoreEntitySet="CartProd">
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CartId" ColumnName="CartId" />
                 <ScalarProperty Name="ProdId" ColumnName="ProdId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
