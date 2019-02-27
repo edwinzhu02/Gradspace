@@ -12,6 +12,8 @@ namespace Jupiter
     {
         public AutomapperWebProfile()
         {
+            CreateMap<Product, ProcessModule>();
+            CreateMap<ProcessModule, Product>().ForMember(x => x.ProductMedias, opt => opt.Ignore());
             CreateMap<Cart, CartModel>().ReverseMap();
             CreateMap<Contact, ContactModel>().ReverseMap();
             CreateMap<Product, ProductModel>().ReverseMap();

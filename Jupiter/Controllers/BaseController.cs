@@ -20,17 +20,6 @@ namespace Jupiter.Controllers
         protected void SetSession()
         {
         }
-        protected Result<string> CheckStateModel(ModelStateDictionary modelState)
-        {
-            var result = new Result<string>();
-            if (!modelState.IsValid)
-            {
-                result.IsSuccess = false;
-                result.ErrorMessage = string.Join(",", GetErrorMessages(modelState));
-                return result;
-            }
-            return result;
-        }
 
         protected void UpdateTable(object model, Type type, object tableRow)
         {

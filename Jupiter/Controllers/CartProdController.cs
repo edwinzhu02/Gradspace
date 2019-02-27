@@ -30,7 +30,7 @@ namespace Jupiter.Controllers
             CartProdModel cartProdModel = new CartProdModel();
             using (var db = new jupiterEntities())
             {
-                var a = db.CartProds.Where(x => x.ID == id).Select(x=>x).FirstOrDefault();
+                var a = db.CartProds.Where(x => x.Id == id).Select(x=>x).FirstOrDefault();
                 if (a == null)
                 {
                     return Json(DataNotFound(result));
@@ -72,7 +72,7 @@ namespace Jupiter.Controllers
             Type type = typeof(CartProd);
             using (var db = new jupiterEntities())
             {
-                var a = db.CartProds.Where(x => x.ID==id).Select(x => x).FirstOrDefault();
+                var a = db.CartProds.Where(x => x.Id==id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
                     return Json(DataNotFound(result));
@@ -97,7 +97,7 @@ namespace Jupiter.Controllers
             var result = new Result<String>();
             using (var db = new jupiterEntities())
             {
-                var a = db.CartProds.Where(x => x.ID == id).Select(x => x).FirstOrDefault();
+                var a = db.CartProds.Where(x => x.Id == id).Select(x => x).FirstOrDefault();
                 if (a == null)
                 {
                     return Json(DataNotFound(result));

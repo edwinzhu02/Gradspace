@@ -25,7 +25,6 @@ namespace Jupiter.Controllers
                 return Json(result);
             }
         }
-        //TODO testing error output
         public IHttpActionResult Get(int id)
         {
             var result = new Result<ContactModel>();

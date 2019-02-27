@@ -16,11 +16,11 @@ namespace Jupiter.Models
         public int? CategroyId { get; set; }
         public string ProdTypeName { get; set; }
         public string CategroyName { get; set; }
-        [Required(ErrorMessage = "Title is required")]
+        //[Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "SubTitle is required")]
+        //[Required(ErrorMessage = "SubTitle is required")]
         public string SubTitle { get; set; }
-        [Required(ErrorMessage = "Description is required")]
+        //[Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public int? TotalStock { get; set; }
         public int? AvailableStock { get; set; }

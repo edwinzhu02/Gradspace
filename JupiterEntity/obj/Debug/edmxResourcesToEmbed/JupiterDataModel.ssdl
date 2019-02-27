@@ -15,9 +15,9 @@
   </EntityType>
   <EntityType Name="CartProd">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CartId" Type="int" />
     <Property Name="ProdId" Type="int" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="2" />

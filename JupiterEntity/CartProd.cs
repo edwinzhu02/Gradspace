@@ -14,7 +14,7 @@ namespace JupiterEntity
     
     public partial class CartProd
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public Nullable<int> CartId { get; set; }
         public Nullable<int> ProdId { get; set; }
         public Nullable<decimal> Price { get; set; }

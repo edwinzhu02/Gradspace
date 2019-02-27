@@ -9,6 +9,7 @@ using JupiterEntity;
 using Jupiter.Models;
 using Newtonsoft.Json;
 using AutoMapper;
+using Jupiter.ActionFilter;
 
 namespace Jupiter.Controllers
 {
@@ -20,24 +21,10 @@ namespace Jupiter.Controllers
             var result = new Result<List<ProductModel>>();
             using (var db = new jupiterEntities())
             {
-                var prod = db.Products.Select(x =>
-                new ProductModel
-                {
-                    ProdId = x.ProdId,
-                    ProdTypeId = x.ProdTypeId,
-                    CategroyId = x.CategroyId,
-                    Title = x.Title,
-                    SubTitle = x.SubTitle,
-                    Description = x.Description,
-                    TotalStock = x.TotalStock,
-                    AvailableStock = x.AvailableStock,
-                    Price = x.Price,
-                    SpcOrDisct = x.SpcOrDisct,
-                    Discount = x.Discount,
-                    ProdTypeName = x.ProductType.TypeName,
-                    CategroyName = x.ProductCategory.CategroyName,
-                }).ToList();
-                result.Data = prod;
+                List<Product> products = db.Products.ToList();
+                List<ProductModel> productModels = new List<ProductModel>();
+                Mapper.Map(products, productModels);
+                result.Data = productModels;
                 return Json(result);
             }
 
@@ -50,25 +37,10 @@ namespace Jupiter.Controllers
             var result = new Result<List<ProductModel>>();
             using (var db = new jupiterEntities())
             {
-                var prod = db.Products.Where(x=>x.ProdTypeId == type).Select(x =>
-                new ProductModel
-                {
-                    ProdId = x.ProdId,
-                    ProdTypeId = x.ProdTypeId,
-                    CategroyId = x.CategroyId,
-                    Title = x.Title,
-                    SubTitle = x.SubTitle,
-                    Description = x.Description,
-                    TotalStock = x.TotalStock,
-                    AvailableStock = x.AvailableStock,
-                    Price = x.Price,
-                    SpcOrDisct = x.SpcOrDisct,
-                    Discount = x.Discount,
-                    ProdTypeName = x.ProductType.TypeName,
-                    CategroyName = x.ProductCategory.CategroyName,
-                    ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
-                }).ToList();
-                result.Data = prod;
+                List<Product> products = db.Products.Where(x => x.ProdTypeId == type).Select(x => x).ToList();
+                List<ProductModel> productModels = new List<ProductModel>();
+                Mapper.Map(products, productModels);
+                result.Data = productModels;
                 return Json(result);
             }
         }
@@ -79,109 +51,79 @@ namespace Jupiter.Controllers
 
             using (var db = new jupiterEntities())
             {
-                var prod = db.Products.Where(p => p.ProdId == id).Select(x =>
-                    new ProductModel
-                    {
-                        ProdId = x.ProdId,
-                        ProdTypeId = x.ProdTypeId,
-                        CategroyId = x.CategroyId,
-                        Title = x.Title,
-                        SubTitle = x.SubTitle,
-                        Description = x.Description,
-                        TotalStock = x.TotalStock,
-                        AvailableStock = x.AvailableStock,
-                        Price = x.Price,
-                        SpcOrDisct = x.SpcOrDisct,
-                        Discount = x.Discount,
-                        ProdTypeName = x.ProductType.TypeName,
-                        CategroyName = x.ProductCategory.CategroyName,
-                        ProdMedias = x.ProductMedias.Select(pm => pm.url).ToList()
-                    }).FirstOrDefault();
-                result.Data = prod;
-                if (prod != null)
+                Product product = db.Products.Find(id);
+                ProductModel productModel = new ProductModel();
+                if (product == null)
                 {
-                    result.IsFound = false;
+                    return Json(DataNotFound(result));
                 }
+                Mapper.Map(product, productModel);
+                result.Data = productModel;
                 return Json(result);
             }
         }
         // POST: api/Product
         //add
-
+        [CheckModelFilter]
         public IHttpActionResult Post([FromBody]ProductModel productModel)
         {
             var result = new Result<string>();  
-            result = base.CheckStateModel(ModelState);
-            if (result.IsSuccess == false) return Json(result);
 
             using (var db = new jupiterEntities())
             {
-                Product newProd = new Product
-                {
-                    ProdTypeId = productModel.ProdTypeId,
-                    CategroyId = productModel.CategroyId,
-                    Title = productModel.Title,
-                    SubTitle = productModel.SubTitle,
-                    Description = productModel.Description,
-                    TotalStock = productModel.TotalStock,
-                    AvailableStock = productModel.AvailableStock,
-                    Price = productModel.Price,
-                    SpcOrDisct = productModel.SpcOrDisct,
-                    Discount = productModel.Discount,
-                    SpecialPrice = productModel.SpecialPrice,
-                    IsActivate = 1,
-                    CreateOn = DateTime.Now
-                };
+                Product product = new Product();
+                productModel.CreateOn = DateTime.Now;
+                Mapper.Map(productModel, product);
                 try
                 {
-                    foreach (var pm in productModel.ProdMedias)
-                    {
-                        ProductMedia prodMedia = new ProductMedia
-                        {
-                            url = pm
-                        };
-                        newProd.ProductMedias.Add(prodMedia);
-                    }
-                    db.Products.Add(newProd);
+                    db.Products.Add(product);
                     db.SaveChanges();
-                    var prodId = newProd.ProdId;
                 }
                 catch (Exception e)
                 {
                     result.IsSuccess = false;
                     result.ErrorMessage = e.Message;
+                }
+                try
+                {
+                    if (productModel.ProdMedias.Count != 0)
+                    {
+                        foreach (var pm in productModel.ProdMedias)
+                        {
+                            ProductMedia prodMedia = new ProductMedia();
+                            prodMedia.ProdId = product.ProdId;
+                            {
+                                prodMedia.url = pm;
+                            };
+                            db.ProductMedias.Add(prodMedia);
+                        }
+                        db.SaveChanges();
                     }
+                }
+                catch ( Exception e)
+                {
+                    result.IsSuccess = false;
+                    result.ErrorMessage = e.Message;
+                }
                 return Json(result);
             }
         }
         // PUT: api/Product/5
         //update
+        [CheckModelFilter]
         public IHttpActionResult Put(int id, [FromBody]ProductModel productModel)
         {
             var result = new Result<string>();
-            result = base.CheckStateModel(ModelState);
-            if (result.IsSuccess == false) return Json(result);
-
             using (var db = new jupiterEntities())
             {
-                Product updateProd = db.Products.Where(x => x.ProdId == id).
-                    Select(x =>x).FirstOrDefault();
-                if (updateProd == null) {
-                    result.IsFound = false;
-                    return Json(result);
+                Product updateProd = db.Products.Where(x => x.ProdId == id).Select(x =>x).FirstOrDefault();
+                if (updateProd == null)
+                {
+                    return Json(DataNotFound(result));
                 }
-                updateProd.ProdTypeId = productModel.ProdTypeId ?? updateProd.ProdTypeId;
-                updateProd.CategroyId = productModel.CategroyId ?? updateProd.CategroyId;
-                updateProd.Title = productModel.Title ?? updateProd.Title;
-                updateProd.SubTitle = productModel.SubTitle ?? updateProd.Title;
-                updateProd.Description = productModel.Description ?? updateProd.Title;
-                updateProd.TotalStock = productModel.TotalStock ?? updateProd.TotalStock;
-                updateProd.AvailableStock = productModel.AvailableStock ?? updateProd.AvailableStock;
-                updateProd.Price = productModel.Price ?? updateProd.Price;
-                updateProd.SpcOrDisct = productModel.SpcOrDisct ?? updateProd.SpcOrDisct;
-                updateProd.Discount = productModel.Discount ?? updateProd.Discount;
-                updateProd.SpecialPrice = productModel.SpecialPrice ?? updateProd.SpecialPrice;
-                updateProd.IsActivate = 1;
+
+                Type prodType = typeof(Product);
+                UpdateTable(productModel, prodType, updateProd);
                 try
                 {
                     db.SaveChanges();
@@ -195,5 +137,30 @@ namespace Jupiter.Controllers
             return Json(result);
         }
 
+        public IHttpActionResult Delete(int id)
+        {
+            var result = new  Result<string>();
+            using (var db = new jupiterEntities())
+            {
+                var a = db.Products.Find(id);
+                if (a == null)
+                {
+                    return Json(DataNotFound(result));
+                }
+
+                try
+                {
+                    a.IsActivate = 0;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    result.ErrorMessage = e.Message;
+                    result.IsSuccess = false;
+                }
+
+                return Json(result);
+            }
+        }
     }
 }
