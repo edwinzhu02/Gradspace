@@ -22,6 +22,7 @@ namespace Jupiter
             CreateMap<Testimonial,TestimonialModel>().ReverseMap();
             CreateMap<EventType, EventTypeModel>().ReverseMap();
             CreateMap<Project, ProjectModel>().ReverseMap();
+            CreateMap<ProductMedia, ProductMediaModel>().ReverseMap();
         }
         public static void Run()
         {

@@ -87,7 +87,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProdId" Type="Int32" />
-    <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Product" Relationship="Self.FK_PRODUCTM_REFERENCE_PRODUCT" FromRole="ProductMedia" ToRole="Product" />
   </EntityType>
   <EntityType Name="ProductType">
@@ -115,7 +115,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectId" Type="Int32" />
-    <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Project" Relationship="Self.FK_PROJECTM_REFERENCE_PROJECT" FromRole="ProjectMedia" ToRole="Project" />
   </EntityType>
   <EntityType Name="Testimonial">

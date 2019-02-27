@@ -81,7 +81,7 @@
         <MappingFragment StoreEntitySet="ProductMedia">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProdId" ColumnName="ProdId" />
-          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -108,7 +108,7 @@
         <MappingFragment StoreEntitySet="ProjectMedia">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

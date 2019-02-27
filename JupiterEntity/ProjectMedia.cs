@@ -16,7 +16,7 @@ namespace JupiterEntity
     {
         public int Id { get; set; }
         public Nullable<int> ProjectId { get; set; }
-        public string url { get; set; }
+        public string Url { get; set; }
     
         public virtual Project Project { get; set; }
     }

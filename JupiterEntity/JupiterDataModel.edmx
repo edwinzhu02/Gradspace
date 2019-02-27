@@ -80,7 +80,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProdId" Type="int" />
-          <Property Name="url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Url" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -104,7 +104,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProjectId" Type="int" />
-          <Property Name="url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Url" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Testimonial">
           <Key>
@@ -364,7 +364,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProdId" Type="Int32" />
-          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="Self.FK_PRODUCTM_REFERENCE_PRODUCT" FromRole="ProductMedia" ToRole="Product" />
         </EntityType>
         <EntityType Name="ProductType">
@@ -392,7 +392,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectId" Type="Int32" />
-          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="Self.FK_PROJECTM_REFERENCE_PROJECT" FromRole="ProjectMedia" ToRole="Project" />
         </EntityType>
         <EntityType Name="Testimonial">
@@ -648,7 +648,7 @@
               <MappingFragment StoreEntitySet="ProductMedia">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProdId" ColumnName="ProdId" />
-                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -675,7 +675,7 @@
               <MappingFragment StoreEntitySet="ProjectMedia">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -75,7 +75,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProdId" Type="int" />
-    <Property Name="url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Url" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="ProductType">
     <Key>
@@ -99,7 +99,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProjectId" Type="int" />
-    <Property Name="url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Url" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Testimonial">
     <Key>

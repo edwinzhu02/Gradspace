@@ -93,7 +93,7 @@ namespace Jupiter.Controllers
                             ProductMedia prodMedia = new ProductMedia();
                             prodMedia.ProdId = product.ProdId;
                             {
-                                prodMedia.url = pm;
+                                prodMedia.Url = pm;
                             };
                             db.ProductMedias.Add(prodMedia);
                         }

@@ -180,6 +180,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductMediaController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TestimonialController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\EventTypeModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
+    <Compile Include="Models\ProductMediaModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\Result.cs" />
